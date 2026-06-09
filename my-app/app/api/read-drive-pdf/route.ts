@@ -44,11 +44,26 @@ export async function GET() {
     console.log("===============");
 
 
-    return NextResponse.json({
-      success: true,
-      fileId: file.id,
-      summary: response.output_text,
-    });
+  return new Response(
+  `
+  <html>
+    <body style="font-family: sans-serif; padding: 24px;">
+      <h1>PDF要約結果</h1>
+      <pre style="white-space: pre-wrap; line-height: 1.6;">
+  ${response.output_text}
+      </pre>
+    </body>
+   </html>
+  `,
+   {
+    headers: {
+      "Content-Type": "text/html; charset=utf-8",
+    },
+   }
+                     );
+
+
+
   } catch (error) {
     console.error(error);
 
