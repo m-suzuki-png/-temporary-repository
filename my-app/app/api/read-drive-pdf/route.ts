@@ -37,6 +37,11 @@ export async function GET() {
       ],
     });
 
+    console.log("=== Summary ===");
+    console.log(response.output_text);
+    console.log("===============");
+
+
     return NextResponse.json({
       success: true,
       fileId: file.id,
@@ -54,3 +59,5 @@ export async function GET() {
     );
   }
 }
+
+
