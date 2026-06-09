@@ -1,84 +1,87 @@
-import "dotenv/config";
-import OpenAI from "openai";
-import { google } from "googleapis";
-import { Readable } from "node:stream";
-import fs from "node:fs/promises";
-import path from "node:path";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY!,
-});
 
-async function downloadPdfFromGoogleDrive(fileId: string): Promise<string> {
-  const auth = new google.auth.JWT({
-    email: process.env.GOOGLE_CLIENT_EMAIL!,
-    key: process.env.GOOGLE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
-    scopes: ["https://www.googleapis.com/auth/drive.readonly"],
-  });
 
-  const drive = google.drive({ version: "v3", auth });
+// import "dotenv/config";
+// import OpenAI from "openai";
+// import { google } from "googleapis";
+// import { Readable } from "node:stream";
+// import fs from "node:fs/promises";
+// import path from "node:path";
 
-  const res = await drive.files.get(
-    {
-      fileId,
-      alt: "media",
-      supportsAllDrives: true,
-    },
-    {
-      responseType: "stream",
-    }
-  );
+// const openai = new OpenAI({
+//   apiKey: process.env.OPENAI_API_KEY!,
+// });
 
-  const outputPath = path.resolve("./input.pdf");
-  const chunks: Buffer[] = [];
+// async function downloadPdfFromGoogleDrive(fileId: string): Promise<string> {
+//   const auth = new google.auth.JWT({
+//     email: process.env.GOOGLE_CLIENT_EMAIL!,
+//     key: process.env.GOOGLE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
+//     scopes: ["https://www.googleapis.com/auth/drive.readonly"],
+//   });
 
-  await new Promise<void>((resolve, reject) => {
-    const stream = res.data as Readable;
+//   const drive = google.drive({ version: "v3", auth });
 
-    stream.on("data", (chunk) => chunks.push(Buffer.from(chunk)));
-    stream.on("end", resolve);
-    stream.on("error", reject);
-  });
+//   const res = await drive.files.get(
+//     {
+//       fileId,
+//       alt: "media",
+//       supportsAllDrives: true,
+//     },
+//     {
+//       responseType: "stream",
+//     }
+//   );
 
-  await fs.writeFile(outputPath, Buffer.concat(chunks));
+//   const outputPath = path.resolve("./input.pdf");
+//   const chunks: Buffer[] = [];
 
-  return outputPath;
-}
+//   await new Promise<void>((resolve, reject) => {
+//     const stream = res.data as Readable;
 
-async function askOpenAIToReadPdf(pdfPath: string) {
-  const file = await openai.files.create({
-    file: await OpenAI.toFile(Buffer.from(await fs.readFile(pdfPath)), "input.pdf"),
-    purpose: "user_data",
-  });
+//     stream.on("data", (chunk) => chunks.push(Buffer.from(chunk)));
+//     stream.on("end", resolve);
+//     stream.on("error", reject);
+//   });
 
-  const response = await openai.responses.create({
-    model: "gpt-5.1",
-    input: [
-      {
-        role: "user",
-        content: [
-          {
-            type: "input_text",
-            text: "このPDFの内容を読み取り、要点を日本語で簡潔にまとめてください。",
-          },
-          {
-            type: "input_file",
-            file_id: file.id,
-          },
-        ],
-      },
-    ],
-  });
+//   await fs.writeFile(outputPath, Buffer.concat(chunks));
 
-  console.log(response.output_text);
-}
+//   return outputPath;
+// }
 
-async function main() {
-  const fileId = process.env.GOOGLE_DRIVE_FILE_ID;
-  if (!fileId) throw new Error("GOOGLE_DRIVE_FILE_ID is missing");
+// async function askOpenAIToReadPdf(pdfPath: string) {
+//   const file = await openai.files.create({
+//     file: await OpenAI.toFile(Buffer.from(await fs.readFile(pdfPath)), "input.pdf"),
+//     purpose: "user_data",
+//   });
 
-  const pdfPath = await downloadPdfFromGoogleDrive(fileId);
-  await askOpenAIToReadPdf(pdfPath);
-}
+//   const response = await openai.responses.create({
+//     model: "gpt-5.1",
+//     input: [
+//       {
+//         role: "user",
+//         content: [
+//           {
+//             type: "input_text",
+//             text: "このPDFの内容を読み取り、要点を日本語で簡潔にまとめてください。",
+//           },
+//           {
+//             type: "input_file",
+//             file_id: file.id,
+//           },
+//         ],
+//       },
+//     ],
+//   });
 
-main().catch(console.error);
+//   console.log(response.output_text);
+// }
+
+// async function main() {
+//   const fileId = process.env.GOOGLE_DRIVE_FILE_ID;
+//   if (!fileId) throw new Error("GOOGLE_DRIVE_FILE_ID is missing");
+
+//   const pdfPath = await downloadPdfFromGoogleDrive(fileId);
+//   await askOpenAIToReadPdf(pdfPath);
+// }
+
+// main().catch(console.error);
