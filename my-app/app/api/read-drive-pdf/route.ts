@@ -9,6 +9,8 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+console.log("ここに来たら軌道はしている")
+
 export async function GET() {
   try {
     const pdfPath = path.join(process.cwd(), "sample", "cp.pdf");
