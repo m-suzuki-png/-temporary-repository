@@ -9,8 +9,6 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-console.log("ここに来たら軌道はしている")
-
 export async function GET() {
   try {
     const pdfPath = path.join(process.cwd(), "sample", "cp.pdf");
@@ -21,7 +19,7 @@ export async function GET() {
     });
 
     const response = await client.responses.create({
-      model: "gpt-5",
+      model: "gpt-5-mini",
       input: [
         {
           role: "user",
@@ -32,8 +30,18 @@ export async function GET() {
             },
             {
               type: "input_text",
-              text: "このPDFの内容を要約してください。重要ポイントも箇条書きで出してください。",
-            },
+              text: `
+                   このPDFの内容を要約してください。
+
+                   今から考慮してほしいことを書きます。
+
+                  1. これは顧客に渡すデータなので、難しく書かないでください。
+                  2. 目的は、この機械をずっと使ってもらうことです。
+                  3. そのために、インシデントを強調してください。
+                  4. 「これだけ危険だったが、この機械を導入してこれだけ防げた」というアピールにしてください。
+                  5. 図・カラー・見出しを使い、ITに詳しくない人にも分かるようにしてください。
+` 
+              },
           ],
         },
       ],
