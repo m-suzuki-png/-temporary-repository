@@ -1,6 +1,5 @@
 export async function GET(){
-return 
-`
+return `
 ・レポート期間
 2026/04/01 16:00  2026/05/01 16:00
 
