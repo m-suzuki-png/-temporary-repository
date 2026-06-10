@@ -91,55 +91,55 @@ export const runtime = "nodejs";
 
 import path from "path";
 import { NextResponse } from "next/server";
-import { summarizePdf } from "../../../library/open_ai/summarizePdf";
-// import { test } from "../../../library/test_open_ai/test";
+// import { summarizePdf } from "../../../library/open_ai/summarizePdf";
+import {test} from "../../../library/test_open_ai/test";
 
-// export async function GET(){
-//   try{
-//     const summary=await test();
-
-//     return NextResponse.json(
-//       {
-//       summary: summary
-//     });
-
-//   }catch (error) {
-//     console.error(error);
-
-//     return NextResponse.json(
-//       {
-//         error: String(error),
-//       },
-//       { status: 500 }
-//     );
-//   }
-// }
-
-
-
-export async function GET() {
-  try {
-    const pdfPath = path.join(process.cwd(), "sample", "cp.pdf");
-
-    const summary = await summarizePdf(pdfPath);
+export async function GET(){
+  try{
+    const summary=await test();
 
     return NextResponse.json(
       {
-        success: true, //これは現時点で使っていない
-        summary: summary,
-      });
+      summary: summary
+    });
 
-
-  } catch (error) {
+  }catch (error) {
     console.error(error);
 
     return NextResponse.json(
       {
-        success: false, //これは現時点で使っていない
         error: String(error),
       },
       { status: 500 }
     );
   }
 }
+
+
+
+// export async function GET() {
+//   try {
+//     const pdfPath = path.join(process.cwd(), "sample", "cp.pdf");
+
+//     const summary = await summarizePdf(pdfPath);
+
+//     return NextResponse.json(
+//       {
+//         success: true, //これは現時点で使っていない
+//         summary: summary,
+//       });
+
+
+//   } catch (error) {
+//     console.error(error);
+
+//     return NextResponse.json(
+//       {
+//         success: false, //これは現時点で使っていない
+//         error: String(error),
+//       },
+//       { status: 500 }
+//     );
+//   }
+// }
 
