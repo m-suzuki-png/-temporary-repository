@@ -1,102 +1,51 @@
-// export const runtime = "nodejs";
-
-// import OpenAI from "openai";
-// import fs from "fs";
-// import path from "path";
-// import { NextResponse } from "next/server";
-
-// const client = new OpenAI({
-//   apiKey: process.env.OPENAI_API_KEY,
-// });
-
-// export async function GET() {
-//   try {
-//     const pdfPath = path.join(process.cwd(), "sample", "cp.pdf");
-
-//     const file = await client.files.create({
-//       file: fs.createReadStream(pdfPath),
-//       purpose: "user_data",
-//     });
-
-//     const response = await client.responses.create({
-//       model: "gpt-5-mini",
-//       input: [
-//         {
-//           role: "user",
-//           content: [
-//             {
-//               type: "input_file",
-//               file_id: file.id,
-//             },
-//             {
-//               type: "input_text",
-//               text: `
-//                    このPDFの内容を以下の内容を踏まえて要約してください
-
-//                    顧客向け月次セキュリティレポートを作成してください。
-//                    専門用語を減らし、非エンジニアにも分かる文章にしてください。
-//                    お客様にこの製品の良さを伝えたいので、この機械が防いだものによってどういった脅威から防げたかを
-//                    伝える文章にしてほしい。またもし防げなかったらどうなっていたかを伝えてほしい。
-//                    `                
-//               },
-//           ],
-//         },
-//       ],
-//     });
-
-//     console.log("=== Summary ===");
-//     console.log(response.output_text);
-//     console.log("===============");
-
-
-
-
-//   return new Response(
-//   `
-//   <html>
-//     <body style="font-family: sans-serif; padding: 24px;">
-//       <h1>PDF要約結果</h1>
-//       <pre style="white-space: pre-wrap; line-height: 1.6;">
-//   ${response.output_text}
-//       </pre>
-//     </body>
-//    </html>
-//   `,
-//    {
-//     headers: {
-//       "Content-Type": "text/html; charset=utf-8",
-//     },
-//    }
-//                      );
-
-
-
-//   } catch (error) {
-//     console.error(error);
-
-//     return NextResponse.json(
-//       {
-//         success: false,
-//         error: String(error),
-//       },
-//       { status: 500 }
-//     );
-//   }
-// }
-
-
-
-
 export const runtime = "nodejs";
-
+import fs from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
 // import { summarizePdf } from "../../../library/open_ai/summarizePdf";
 import {test} from "../../../library/test_open_ai/test";
+import { createClient } from "@supabase/supabase-js";
+
+//open aiにpdfファイルを読み込ませる
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
+
+
+async function upload(pdfPath : string){
+    const fileBuffer = fs.readFileSync(pdfPath);
+
+  const fileName = path.basename(pdfPath);
+
+  const { data, error } = await supabase.storage
+    .from("origin_pdf_save")
+    .upload(`CustomerA/2026-05/${fileName}`, fileBuffer, {
+      contentType: "application/pdf",
+      upsert: true,
+    });
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+
+};
+
 
 export async function GET(){
   try{
-    const summary=await test();
+
+      const pdfPath = path.join(
+      process.cwd(),
+      "sample",
+      "cp.pdf"
+    );
+
+    const summary=await test(); 
+    await upload(pdfPath);
 
     return NextResponse.json(
       {
@@ -116,7 +65,7 @@ export async function GET(){
 }
 
 
-
+//open aiにpdfファイルを読み込ませる
 // export async function GET() {
 //   try {
 //     const pdfPath = path.join(process.cwd(), "sample", "cp.pdf");
