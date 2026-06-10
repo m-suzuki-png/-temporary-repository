@@ -92,7 +92,7 @@ export const runtime = "nodejs";
 import path from "path";
 import { NextResponse } from "next/server";
 // import { summarizePdf } from "@/app/library/open_ai/summarizePdf";
-import {test} from "@/app/library/test_open_ai/test";
+import { test } from "../../library/test_open_ai/test";
 
 export async function GET(){
   try{
