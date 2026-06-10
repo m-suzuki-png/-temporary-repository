@@ -21,7 +21,7 @@ async function upload(pdfPath : string){
 
   const { data, error } = await supabase.storage
     .from("origin_pdf_save")
-    .upload(`CustomerA/2026-05/${fileName}`, fileBuffer, {
+    .upload(`CustomerA/cp.pdf`, fileBuffer, {
       contentType: "application/pdf",
       upsert: true,
     });
