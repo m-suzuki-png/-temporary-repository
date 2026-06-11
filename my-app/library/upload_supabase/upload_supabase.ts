@@ -7,6 +7,8 @@ const supabase = createClient(
 
 export async function upload_supabase(summary:any){
 
+ 
+
  const { data, error } = await supabase
     .from("reports")
     .insert({

@@ -52,9 +52,7 @@ export async function GET(){
 
     return NextResponse.json(
       {
-      success : true,
-      summary: summary,
-      debug: "最後まで実行"
+      summary: summary
     });
 
   }catch (error) {
