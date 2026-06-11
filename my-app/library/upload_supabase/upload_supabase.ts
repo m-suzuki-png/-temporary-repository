@@ -1,6 +1,8 @@
 import { supabase } from "@/lib/supabase";
 
 export async function upload_supabase(summary:any){
+ console.log("関数に入った");
+ console.log(`summaryの中に入っているか確認。${summary.traffic_gb}`);
 
  const { data, error } = await supabase
     .from("reports")
