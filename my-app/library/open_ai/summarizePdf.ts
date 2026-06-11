@@ -37,8 +37,8 @@ export async function summarizePdf(pdfPath: string) {
   "av_count": 0 ,
   "ips_count": 0,
   "bot_count": 0,
-  "infected_hosts": 0,
-  "traffic_gb" 0: 
+  "infected_Hosts": 0,
+  "trafficGb_gb" : 0 
 }
 
 ai_summaryには、顧客向け月次セキュリティレポートを書いてください。下記を参考に記載してください

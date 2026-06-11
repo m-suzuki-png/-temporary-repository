@@ -14,7 +14,7 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-
+//supabaseにpdfを保存させる　原本をそのままで
 async function upload(pdfPath : string){
 
   const fileBuffer = fs.readFileSync(pdfPath);
@@ -47,8 +47,6 @@ export async function GET() {
       "sample",
       "cp.pdf"
     );
-
-    const pdfPath = path.join(process.cwd(), "sample", "cp.pdf");
 
      const summary = await summarizePdf(pdfPath);
      await upload(pdfPath);
