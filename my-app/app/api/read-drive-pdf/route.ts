@@ -47,7 +47,7 @@ export async function GET(){
       "sample",
       "cp.pdf"
     );
-
+    console.log("summaryをもらう前");
     const summary=await test(); 
     await upload(pdfPath);
     await upload_supabase(summary);
