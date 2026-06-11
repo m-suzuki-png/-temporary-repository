@@ -24,7 +24,24 @@ export async function summarizePdf(pdfPath: string) {
           {
             type: "input_text",
             text: `
-このPDFの内容を以下の内容を踏まえて要約してください。
+
+このPDFを解析して、以下のJSONのみを出力してください。
+数値項目はPDFから読み取ってください。(0の部分を)
+説明文やコードブロックは不要です。
+
+{
+  "ai_summary": "",
+  "customer_id": 11,
+  "report_month": "",
+  "pdf_path": "${pdfPath}",
+  "av_count": 0 ,
+  "ips_count": 0,
+  "bot_count": 0,
+  "infected_hosts": 0,
+  "traffic_gb" 0: 
+}
+
+ai_summaryには、顧客向け月次セキュリティレポートを書いてください。下記を参考に記載してください
 
 顧客向け月次セキュリティレポートを作成してください。
 専門用語を減らし、非エンジニアにも分かる文章にしてください。
@@ -37,5 +54,7 @@ export async function summarizePdf(pdfPath: string) {
     ],
   });
 
-  return response.output_text;
+  const report=JSON.parse(response.output_text);
+
+  return report;
 }
