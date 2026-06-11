@@ -20,6 +20,7 @@ export async function upload_supabase(summary:any){
     .select();
 
   if (error) {
+    console.log(error);
     throw error;
   }
 
