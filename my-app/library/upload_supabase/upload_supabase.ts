@@ -13,8 +13,8 @@ export async function upload_supabase(summary:any){
       av_count: summary.av_count,
       ips_count: summary.ips_count,
       bot_count: summary.bot_count,
-      infected_hosts: summary.infected_hosts,
-      traffic_gb: summary.traffic_gb,
+      infected_hosts: summary.infected_Hosts,
+      traffic_gb: summary.trafficGb_gb,
       ai_summary: summary.ai_summary,
     })
     .select();

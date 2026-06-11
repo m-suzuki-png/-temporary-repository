@@ -16,6 +16,8 @@ const supabase = createClient(
 
 
 async function upload(pdfPath : string){
+
+  console.log("pdfをアップロード中")
   const fileBuffer = fs.readFileSync(pdfPath);
 
   const fileName = path.basename(pdfPath);
