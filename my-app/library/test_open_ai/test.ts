@@ -1,8 +1,6 @@
 export async function test(){
-return `
-・レポート期間
-2026/04/01 16:00  2026/05/01 16:00
-
+return {
+ai_summary: `
 ・PDFパス
 D:SecurityReportCustomerA202605checkpoint_report.pdf
 
@@ -30,6 +28,16 @@ D:SecurityReportCustomerA202605checkpoint_report.pdf
 
 ・作成日
 2026/06/10
+`,
 
-`;
+  "customer_id":11,
+  "report_month":"2026/04/01 16:00",
+  "pdf_path": "abcdefghig",
+  "av_count": 432,
+  "ips_count": 774,
+  "bot_count": 2,
+  "infected_Hosts": 1,
+  "trafficGb_gb": 96.3
+
+}
 }
