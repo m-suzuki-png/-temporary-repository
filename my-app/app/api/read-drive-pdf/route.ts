@@ -17,7 +17,6 @@ const supabase = createClient(
 
 async function upload(pdfPath : string){
 
-  console.log("pdfをアップロード中")
   const fileBuffer = fs.readFileSync(pdfPath);
 
   const fileName = path.basename(pdfPath);
@@ -47,14 +46,15 @@ export async function GET(){
       "sample",
       "cp.pdf"
     );
-    console.log("summaryをもらう前");
     const summary=await test(); 
     await upload(pdfPath);
     await upload_supabase(summary);
 
     return NextResponse.json(
       {
-      summary: summary
+      success : true,
+      summary: summary,
+      debug: "最後まで実行"
     });
 
   }catch (error) {
