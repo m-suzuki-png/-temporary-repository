@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import {logger} from "../../library/logger/logger"
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -25,9 +26,10 @@ export async function upload_supabase(summary:any){
     .select();
 
   if (error) {
-    console.log(error);
-    throw error;
+    logger.error(error,"supabaseに適切に保存されていません")
+    throw error
   }
+  
 
   return data;
 

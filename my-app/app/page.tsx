@@ -28,13 +28,8 @@ export default function Home() {
     }
     else{
       setSummary("結果がありません")
-    }
-
-//  setSummary(data.summary || data.error || "結果がありません");
-   
-    
-  }
-   catch(error){
+    }  
+  }catch(error){
    logger.error(error,"ユーザー取得処理失敗");
    setSummary("PDFの読み込みに失敗しました");
 }  

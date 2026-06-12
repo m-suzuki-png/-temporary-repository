@@ -7,6 +7,7 @@ import { summarizePdf } from "../../../library/open_ai/summarizePdf";
 import { createClient } from "@supabase/supabase-js";
 import { upload_supabase } from "../../../library/upload_supabase/upload_supabase";
 import {logger} from "../../../library/logger/logger"
+import { notifySlack } from "../../../library/slack/notifyslack";
 
 //supabaseにpdfを保存させる　原本をそのままで
 
@@ -30,87 +31,60 @@ async function upload(pdfPath : string){
     });
 
   if (error) {
-    logger.error(error)
+    logger.error(error,"supabaseにデータが保存できませんでした")
      }
 
-  return data;
+  // return data;
 
 };
 //supabaseにpdfを保存させる　原本をそのままで
 
 
-//open aiにpdfファイルを読み込ませる
-export async function GET() {
-  try {
-
-      const pdfPath = path.join(
-      process.cwd(),
-      "sample",
-      "cp.pdf"
-    );
-
-    if(!fs.existsSync(pdfPath)){
-      throw new Error('該当PDFが存在しません: ${pdfPath}')
-    }
-
-     const summary = await summarizePdf(pdfPath);
-
-    if(summary.error){
-       return NextResponse.json(
-      {
-        error: String(summary.error),
-      },
-       );
-    }
-
-     await upload(pdfPath);
-     await upload_supabase(summary);
-
-    return NextResponse.json(
-      {
-        success: true, //これは現時点で使っていない
-        summary: summary.ai_summary,
-      });
-
-
-  } catch (error) {
-    logger.error(error)
-
-    return NextResponse.json(
-      {
-        error: String(error),
-      },
-      { status: 500 }
-    );
-  }
-}
-//open aiにpdfファイルを読み込ませる
-
-
-
-
-
-
-
-// //open aiの代わりに挙動を見るためのプログラム
-// export async function GET(){
-//   try{
+// //open aiにpdfファイルを読み込ませる
+// export async function GET() {
+//   try {
 
 //       const pdfPath = path.join(
 //       process.cwd(),
 //       "sample",
 //       "cp.pdf"
 //     );
-//     const summary=await test(); 
-//     await upload(pdfPath);
-//     await upload_supabase(summary);
+
+//     if(!fs.existsSync(pdfPath)){
+//       throw new Error('該当PDFが存在しません: ${pdfPath}')
+//     }
+
+//      const summary = await summarizePdf(pdfPath);
+
+//     if(summary.error){
+//        return NextResponse.json(
+//       {
+//         error: String(summary.error),
+//       },
+//        );
+//     }
+
+//      await upload(pdfPath);
+//      await upload_supabase(summary);
+
+//     //  slackの通知だけ別のtry分に書く
+//     try{
+//      await notifySlack("PDFの要約処理が完了しました")
+//     }catch(slackError){
+//       logger.error(slackError,"slack通知に失敗しました")
+//     }
+//     // slack通知だけ別のtyr分に書く
 
 //     return NextResponse.json(
 //       {
-//       summary: summary.ai_summary
-//     });
+//         success: true, //これは現時点で使っていない
+//         summary: summary.ai_summary,
+//       });
 
-//   }catch (error) {
+
+//   } catch (error) {
+    
+
 //     return NextResponse.json(
 //       {
 //         error: String(error),
@@ -119,4 +93,47 @@ export async function GET() {
 //     );
 //   }
 // }
+// //open aiにpdfファイルを読み込ませる
+
+
+
+
+
+
+
+// //open aiの代わりに挙動を見るためのプログラム
+export async function GET(){
+  try{
+
+      const pdfPath = path.join(
+      process.cwd(),
+      "sample",
+      "cp.pdf"
+    );
+    const summary=await test(); 
+    await upload(pdfPath);
+    await upload_supabase(summary);
+
+  // slackの通知だけ別のtry分に書く
+    try{
+     await notifySlack("PDFの要約処理が完了しました")
+    }catch(slackError){
+      logger.error(slackError,"slack通知に失敗しました")
+    }
+    // slack通知だけ別のtyr分に書く
+
+    return NextResponse.json(
+      {
+      summary: summary.ai_summary
+    });
+
+  }catch (error) {
+    return NextResponse.json(
+      {
+        error: String(error),
+      },
+      { status: 500 }
+    );
+  }
+}
 //open aiの代わりに挙動を見るためのプログラム
