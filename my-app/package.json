@@ -10,7 +10,8 @@
   "react-dom": "latest",
   "openai": "latest",
   "googleapis": "latest",
-  "@supabase/supabase-js": "latest"
+  "@supabase/supabase-js": "latest",
+  "pino": "latest"
 },
   "devDependencies": {
     "typescript": "latest",

@@ -6,6 +6,7 @@ import { summarizePdf } from "../../../library/open_ai/summarizePdf";
 // import {test} from "../../../library/test_open_ai/test";
 import { createClient } from "@supabase/supabase-js";
 import { upload_supabase } from "../../../library/upload_supabase/upload_supabase";
+import {logger} from "../../../library/logger/logger"
 
 //supabaseにpdfを保存させる　原本をそのままで
 
@@ -29,8 +30,8 @@ async function upload(pdfPath : string){
     });
 
   if (error) {
-    throw error;
-  }
+    logger.error(error)
+     }
 
   return data;
 
@@ -48,7 +49,20 @@ export async function GET() {
       "cp.pdf"
     );
 
+    if(!fs.existsSync(pdfPath)){
+      throw new Error('該当PDFが存在しません: ${pdfPath}')
+    }
+
      const summary = await summarizePdf(pdfPath);
+
+    if(summary.error){
+       return NextResponse.json(
+      {
+        error: String(summary.error),
+      },
+       );
+    }
+
      await upload(pdfPath);
      await upload_supabase(summary);
 
@@ -60,11 +74,10 @@ export async function GET() {
 
 
   } catch (error) {
-    console.error(error);
+    logger.error(error)
 
     return NextResponse.json(
       {
-        success: false, //これは現時点で使っていない
         error: String(error),
       },
       { status: 500 }
