@@ -1,30 +1,68 @@
-// 本番環境ではここは変更する 
-const GOOGLEDRIVE_FOLDER = '1RpDPvjujSevCbnJDYgXjjOQkXc8ul-Xj';
-const LOG='1q41lwzs1Ron1oLLPwQkD8Svf5eDWVeK_';
+ const LOG='1q41lwzs1Ron1oLLPwQkD8Svf5eDWVeK_';
+ const GOOGLEDRIVE_FOLDER = '1RpDPvjujSevCbnJDYgXjjOQkXc8ul-Xj';
 
-// 指定のPDFファイルを指定
+   // 選ばれたpdfファイルをひとつずつ要素に分けて抽出
 function pdf_move() {
-  const threads = GmailApp.search(
+    const threads = GmailApp.search(
   'from:it-ops@pc2525.com has:attachment is:unread'
    );
-
-// 選ばれたpdfファイルをひとつずつ要素に分けて抽出
 
   threads.forEach(thread => {
     thread.getMessages().forEach(message => {
       message.getAttachments().forEach(file => {
        
     if (/^monthly_report_.+\.pdf$/i.test(file.getName())) {
-       uploadToGoogleDrive(file,thread);
+       uploadTosupabase(file,thread);
 }
       });
     });
 
   });
+ // 選ばれたpdfファイルをひとつずつ要素に分けて抽出
+
+
+// メモ帳にログを書く
+function logdescribe(file,result) {
+
+const today = new Date();
+const yyyy = today.getFullYear();
+const mm = String(
+  today.getMonth() + 1
+)
+const fileName =
+  `${yyyy}_${mm}log.txt`;
+
+const folder = DriveApp.getFolderById(LOG);
+
+const files = folder.getFilesByName(fileName);
+let logFile;
+
+if (files.hasNext()) {
+  logFile = files.next();
+} else {
+  logFile = folder.createFile(fileName, "");
 }
 
-function uploadToGoogleDrive(file, thread) {
-  const folder = DriveApp.getFolderById(GOOGLEDRIVE_FOLDER);
+const currentText = logFile.getBlob().getDataAsString("UTF-8");
+
+const now = Utilities.formatDate(
+    new Date(),
+    Session.getScriptTimeZone(),
+    'yyyy/MM/dd HH:mm:ss'
+  );
+
+const line = `${now}\n${file.getName()} ${result}`;
+
+logFile.setContent(currentText + '\n' + line);
+}
+// メモ帳にログを書く
+
+
+// supabaseにデータをアップロード
+function uploadTosupabase(file, thread) {
+  
+const folder = DriveApp.getFolderById(GOOGLEDRIVE_FOLDER);
+
   try {
     // 同名ファイルが既に存在する場合はスキップ
     const existing = folder.getFilesByName(file.getName());
@@ -44,23 +82,5 @@ function uploadToGoogleDrive(file, thread) {
     }
   }
 }
-
-
-// メモ帳にログを書く]
-function logdescribe(file,result) {
-
-  const folder = DriveApp.getFolderById(LOG);
-  const logFile = folder.getFilesByName('cp_upload_log.txt').next();
-  const currentText = logFile.getBlob().getDataAsString();
-
-
-  const now = Utilities.formatDate(
-    new Date(),
-    Session.getScriptTimeZone(),
-    'yyyy/MM/dd HH:mm:ss'
-  );
-
-  const line = `${now}\n${file.getName()} ${result}`;
-
-  logFile.setContent(currentText + '\n' + line);
 }
+// supabaseにデータをアップロード

@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import {logger} from "../../library/logger/logger"
+import {logger} from "../logger/logger"
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -34,3 +34,6 @@ export async function upload_supabase(summary:any){
   return data;
 
 }
+
+
+
