@@ -11,31 +11,18 @@ import {logger} from "../../../library/logger/logger"
 import { notifySlack } from "../../../library/slack/notifyslack";
 import { sentReportMail } from "../../../library/sent_gmail/sent_gmail";
 
-//supabaseにpdfを保存させる　原本をそのままで
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
-
-
 //open aiにpdfファイルを読み込ませる
-export async function GET() {
+export async function GET(request: Request) {
+
   try {
 
-    //   const pdfPath = path.join(
-    //   process.cwd(),
-    //   "sample",
-    //   "cp.pdf"
-    // );
+      const { searchParams } = new URL(request.url);
+      const i = Number(
+      searchParams.get("i")
+  );
 
-    // if(!fs.existsSync(pdfPath)){
-    //   throw new Error('該当PDFが存在しません: ${pdfPath}')
-    // }
-     
-    // originはsupbaseにあるpdfファイルの情報
-     const origin=await download_supabase()
+
+     const origin=await download_supabase(i); // originはsupbaseにあるpdfファイルの情報
      const pdfBlob = await origin.blob();
      const summary = await summarizePdf(pdfBlob);
     
@@ -58,66 +45,22 @@ export async function GET() {
     }
     // slack通知だけ別のtyr分に書く
 
+  // }
+
     return NextResponse.json(
       {
         success: true, //これは現時点で使っていない
         summary: summary.ai_summary,
       });
-
-
   } catch (error) {
-    
-
     return NextResponse.json(
       {
         error: String(error),
       },
       { status: 500 }
     );
+    
   }
 }
+
 //open aiにpdfファイルを読み込ませる
-
-
-
-
-
-
-
-// // //open aiの代わりに挙動を見るためのプログラム
-// export async function GET(){
-//   try{
-
-//     //   const pdfPath = path.join(
-//     //   process.cwd(),
-//     //   "sample",
-//     //   "cp.pdf"
-//     // );
-
-//     const origin=await download_supabase()
-//     const summary=await test(); 
-//     await upload_supabase(summary);
-
-//   // slackの通知だけ別のtry分に書く
-//     try{
-//      await notifySlack("PDFの要約処理が完了しました")
-//     }catch(slackError){
-//       logger.error(slackError,"slack通知に失敗しました")
-//     }
-//     // slack通知だけ別のtyr分に書く
-
-//     return NextResponse.json(
-//       {
-//       summary: summary.ai_summary
-//     });
-
-//   }catch (error) {
-//     return NextResponse.json(
-//       {
-//         error: String(error),
-//       },
-//       { status: 500 }
-//     );
-//   }
-// }
-// //open aiの代わりに挙動を見るためのプログラム

@@ -7,7 +7,7 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-export async function download_supabase() {
+export async function download_supabase(i : number) {
 
  const { data: files, error: listError } = await supabase.storage
   .from("origin_pdf_save")
@@ -15,11 +15,11 @@ export async function download_supabase() {
 
 if (listError) throw listError;
 
-const pdfFiles = (files ?? []).filter(file =>
+const pdfFiles = (files ?? []).filter((file: any) =>
   file.name.toLowerCase().endsWith(".pdf")
 );
 
-const pdfFile = pdfFiles[0];
+const pdfFile = pdfFiles[i];
 
 if (!pdfFile) {
   throw new Error("PDFファイルがありません");
