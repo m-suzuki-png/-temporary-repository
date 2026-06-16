@@ -9,33 +9,32 @@ const supabase = createClient(
 
 export async function download_supabase() {
 
-  const {data: files, error}=await supabase.storage
-  .from("pdf")
+ const { data: files, error: listError } = await supabase.storage
+  .from("origin_pdf_save")
   .list("2026_6");
 
-  console.log(files);
+if (listError) throw listError;
 
-  return
+const pdfFiles = (files ?? []).filter(file =>
+  file.name.toLowerCase().endsWith(".pdf")
+);
 
-//   const target = files?.find((item : {name:string}) =>
-//   /^monthly_report_.*\.pdf$/.test(item.name)
-// );
+const pdfFile = pdfFiles[0];
 
-const filePath = `2026_6/${target.name}`;
+if (!pdfFile) {
+  throw new Error("PDFファイルがありません");
+}
 
-const { data, error } = await supabase.storage
-  .from("pdf")
-  .download(filePath);
+const { data: pdfData, error: downloadError } = await supabase.storage
+  .from("origin_pdf_save")
+  .download(`2026_6/${pdfFile.name}`);
 
+if (downloadError) throw downloadError;
 
-  if (error) {
-    return new Response("PDF not found", { status: 404 });
-  }
-
-  return new Response(data, {
-    headers: {
-      "Content-Type": "application/pdf",
-      "Content-Disposition": `attachment; filename="${target.name}"`,
-    },
-  });
+return new Response(pdfData, {
+  headers: {
+    "Content-Type": "application/pdf",
+    "Content-Disposition": `attachment; filename="${pdfFile.name}"`,
+  },
+});
 }
