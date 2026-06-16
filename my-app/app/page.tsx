@@ -16,9 +16,8 @@ export default function Home() {
    
     for(let i=0 ; i< pdf_number; i++){
 
-    const res = await fetch(
-    `${url}?pdf_number=${i}`
-     );
+    const res = await fetch(`${url}?i=${i}`);
+
 
     if(!res.ok){
       throw new Error(`Https error:${res.status}`);
