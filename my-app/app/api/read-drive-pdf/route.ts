@@ -9,6 +9,7 @@ import { upload_supabase } from "../../../library/upload_supabase/upload_supabas
 import { download_supabase } from "../../../library/download_supabase/download_supabase";
 import {logger} from "../../../library/logger/logger"
 import { notifySlack } from "../../../library/slack/notifyslack";
+import { sentReportMail } from "../../../library/sent_gmail/sent_gmail";
 
 //supabaseにpdfを保存させる　原本をそのままで
 
@@ -47,6 +48,7 @@ export async function GET() {
     }
 
      await upload_supabase(summary);
+     await sentReportMail(summary);
 
     //  slackの通知だけ別のtry分に書く
     try{

@@ -11,12 +11,14 @@
   "openai": "latest",
   "googleapis": "latest",
   "@supabase/supabase-js": "latest",
+  "nodemailer": "^6.10.1",
   "pino": "latest"
 },
   "devDependencies": {
     "typescript": "latest",
     "@types/node": "latest",
-    "@types/react": "latest"
+    "@types/react": "latest",
+    "@types/nodemailer": "^6.4.17"
   }
 }
 
