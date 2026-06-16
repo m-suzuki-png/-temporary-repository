@@ -18,9 +18,10 @@ if (listError) throw listError;
 const pdfFiles = (files ?? []).filter((file: any) =>
   file.name.toLowerCase().endsWith(".pdf")
 );
-console.log(i);
+console.log(`downloadに入りました。i=&{i}`);
 
 const pdfFile = pdfFiles[i];
+console.log(`pdfファイルの名前は=&{pdfFile.name}`);
 
 if (!pdfFile) {
   throw new Error("PDFファイルがありません");

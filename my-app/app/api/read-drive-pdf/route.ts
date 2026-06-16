@@ -39,7 +39,7 @@ export async function GET(request: Request) {
 
     //  slackの通知だけ別のtry分に書く
     try{
-     await notifySlack("PDFの要約処理が完了しました")
+     await notifySlack(`PDFの要約処理が完了しました。i=${i}`)
     }catch(slackError){
       logger.error(slackError,"slack通知に失敗しました")
     }
