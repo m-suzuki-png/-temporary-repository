@@ -18,6 +18,7 @@ if (listError) throw listError;
 const pdfFiles = (files ?? []).filter((file: any) =>
   file.name.toLowerCase().endsWith(".pdf")
 );
+console.log(i);
 
 const pdfFile = pdfFiles[i];
 

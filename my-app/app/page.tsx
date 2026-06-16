@@ -7,7 +7,7 @@ export default function Home() {
   const [summary, setSummary] = useState("");
   const [loading, setLoading] = useState(false);
   const url="/api/read-drive-pdf"
-  const pdf_number=100;
+  const pdf_number=3;
 
   async function run() {
    try{
