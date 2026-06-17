@@ -58,8 +58,9 @@ export async function summarizePdf(origin: Blob) {
   "ips_count": 0,
   "bot_count": 0,
   "infected_Hosts": 0,
-  "trafficGb_gb" : 0 
+  "trafficGb_gb" : 0
 }
+
 
 顧客にgmailを書きます。以下のことを端的にまとめたメール文章を書いてください
 ai_summaryにそのメール文章をそのまま挿入してください

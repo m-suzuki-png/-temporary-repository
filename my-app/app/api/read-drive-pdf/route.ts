@@ -22,7 +22,7 @@ export async function GET(request: Request) {
   );
 
 
-     const origin=await download_supabase(i); // originはsupbaseにあるpdfファイルの情報
+     const {fileName,origin} =await download_supabase(i); // originはsupbaseにあるpdfファイルの情報
      const pdfBlob = await origin.blob();
      const summary = await summarizePdf(pdfBlob);
     
@@ -34,7 +34,7 @@ export async function GET(request: Request) {
        );
     }
 
-     await upload_supabase(summary);
+     await upload_supabase(fileName,summary);
 
     //  await sentReportMail(summary); //メール送信する関数
 

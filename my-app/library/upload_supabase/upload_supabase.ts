@@ -6,9 +6,31 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-export async function upload_supabase(summary:any){
+export async function upload_supabase(fileName:string,summary:any){
 
- 
+  // filenameからmacaddressを抽出
+ const remac=fileName
+ .replace(/:/g,"")
+ .replace(/\.pdf$i,"");
+
+//  下は、スプレッドシートに送る用
+ const sent_mac=fileName
+ .replace(/\.pdf$i,"");
+  // filenameからmacaddressを抽出
+
+//  gasにつなぐ→macaddressから会社の名前と、メールアドレスを探す
+
+const res = await fetch(
+  `https://script.google.com/a/macros/rem2525.com/s/AKfycbzwObh5kfv7ZG172FoslMhUtZrwkieoCjJOfH3lz043SVP6B1efsC1bHtrjAtFiQLP-/exec?${encodeURIComponent(set_mac)}`
+);
+
+const data = await res.json();
+
+console.log(data.companyname);
+console.log(data.email);
+
+const address=await res.json();
+//  gasにつなぐ→macaddressから会社の名前と、メールアドレスを探す
 
  const { data, error } = await supabase
     .from("reports")
@@ -22,6 +44,9 @@ export async function upload_supabase(summary:any){
       infected_hosts: summary.infected_Hosts,
       traffic_gb: summary.trafficGb_gb,
       ai_summary: summary.ai_summary,
+      MacAddress: remac,
+      MailAddress:data.email,
+      companyName:data.companyname
     })
     .select();
 

@@ -33,10 +33,8 @@ const { data: pdfData, error: downloadError } = await supabase.storage
 
 if (downloadError) throw downloadError;
 
-return new Response(pdfData, {
-  headers: {
-    "Content-Type": "application/pdf",
-    "Content-Disposition": `attachment; filename="${pdfFile.name}"`,
-  },
-});
+return {
+  fileName: pdfFile.name,
+  origin: pdfData,
+};
 }
