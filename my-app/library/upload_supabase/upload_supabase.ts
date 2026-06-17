@@ -24,10 +24,10 @@ const res = await fetch(
   `https://script.google.com/a/macros/rem2525.com/s/AKfycbzwObh5kfv7ZG172FoslMhUtZrwkieoCjJOfH3lz043SVP6B1efsC1bHtrjAtFiQLP-/exec?${encodeURIComponent(set_mac)}`
 );
 
-const data = await res.json();
+const result = await res.json();
 
-console.log(data.companyname);
-console.log(data.email);
+console.log(result.companyname);
+console.log(result.email);
 
 const address=await res.json();
 //  gasにつなぐ→macaddressから会社の名前と、メールアドレスを探す
@@ -45,8 +45,8 @@ const address=await res.json();
       traffic_gb: summary.trafficGb_gb,
       ai_summary: summary.ai_summary,
       MacAddress: remac,
-      MailAddress:data.email,
-      companyName:data.companyname
+      MailAddress:result.email,
+      companyName:result.companyname
     })
     .select();
 
