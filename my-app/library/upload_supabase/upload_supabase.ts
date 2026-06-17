@@ -11,11 +11,11 @@ export async function upload_supabase(fileName:string,summary:any){
   // filenameからmacaddressを抽出
  const remac=fileName
  .replace(/:/g,"")
- .replace(/\.pdf$i,"");
+ .replace(/\.pdf$/i,"");
 
 //  下は、スプレッドシートに送る用
  const sent_mac=fileName
- .replace(/\.pdf$i,"");
+ .replace(/\.pdf$/i,"");
   // filenameからmacaddressを抽出
 
 //  gasにつなぐ→macaddressから会社の名前と、メールアドレスを探す
