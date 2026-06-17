@@ -35,7 +35,8 @@ export async function GET(request: Request) {
     }
 
      await upload_supabase(summary);
-     await sentReportMail(summary);
+
+    //  await sentReportMail(summary); //メール送信する関数
 
     //  slackの通知だけ別のtry分に書く
     try{
