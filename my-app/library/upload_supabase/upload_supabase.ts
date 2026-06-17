@@ -32,9 +32,6 @@ console.log("vercel→gasをつなげ終わりました")
 console.log(result.companyname);
 console.log(result.email);
 
-const address=await res.json();
-//  gasにつなぐ→macaddressから会社の名前と、メールアドレスを探す
-
  const { data, error } = await supabase
     .from("reports")
     .insert({
