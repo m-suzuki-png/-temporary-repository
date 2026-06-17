@@ -21,7 +21,7 @@ export async function upload_supabase(fileName:string,summary:any){
 //  gasにつなぐ→macaddressから会社の名前と、メールアドレスを探す
 
 const res = await fetch(
-  `https://script.google.com/a/macros/rem2525.com/s/AKfycbzwObh5kfv7ZG172FoslMhUtZrwkieoCjJOfH3lz043SVP6B1efsC1bHtrjAtFiQLP-/exec?${encodeURIComponent(set_mac)}`
+  `https://script.google.com/a/macros/rem2525.com/s/AKfycbzwObh5kfv7ZG172FoslMhUtZrwkieoCjJOfH3lz043SVP6B1efsC1bHtrjAtFiQLP-/exec?${encodeURIComponent(sent_mac)}`
 );
 
 const result = await res.json();
