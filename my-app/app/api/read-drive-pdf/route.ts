@@ -24,7 +24,7 @@ export async function GET(request: Request) {
 
      const {fileName,origin} =await download_supabase(i); // originはsupbaseにあるpdfファイルの情報
     //  const pdfBlob = await origin.blob();
-     const summary = await summarizePdf(pdfBlob);
+     const summary = await summarizePdf(origin);
     
     if(summary.error){
        return NextResponse.json(
