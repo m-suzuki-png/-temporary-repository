@@ -8,7 +8,7 @@ export const supabase = createClient(
 export default async function MailListPage() {
   const { data, error } = await supabase
     .from("reports")
-    .select("mailaddress,companyname,id, ai_summary");
+    .select("mailaddress","companyname","id", "ai_summary");
 
   if (error) {
     return <div>取得失敗: {error.message}</div>;
