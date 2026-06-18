@@ -30,6 +30,10 @@ export default async function MailListPage() {
           }}
         >
           <pre style={{ whiteSpace: "pre-wrap" }}>
+            {item.mailaddress}
+          </pre>
+
+          <pre style={{ whiteSpace: "pre-wrap" }}>
             {item.ai_summary}
           </pre>
 
