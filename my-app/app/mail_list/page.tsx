@@ -24,31 +24,3 @@ export default async function MailListPage() {
     </main>
   );
 }
-
-
-// //こっちはメールの一覧が見れる
-//   return (
-//     <main style={{ padding: 24 }}>
-//       <h1>メール確認画面</h1>
-
-//       {data?.map((item) => (
-//         <div
-//           key={item.id}
-//           style={{ border: "1px solid #ddd", padding: 16, marginTop: 16 }}
-//         >
-//           <pre style={{ whiteSpace: "pre-wrap" }}>
-//             {item.mailaddress}
-//           </pre>
-
-//           <pre style={{ whiteSpace: "pre-wrap" }}>
-//             {item.ai_summary}
-//           </pre>
-
-//          <button onClick={() => router.push("/mail_list")}>
-//             メール送信
-//           </button>
-//         </div>
-//       ))}
-//     </main>
-//   );
-// }
