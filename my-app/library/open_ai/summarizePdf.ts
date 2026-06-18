@@ -121,21 +121,3 @@ ${recompanyname}様
     throw error;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

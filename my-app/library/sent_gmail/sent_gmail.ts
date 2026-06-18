@@ -1,9 +1,22 @@
 import nodemailer from "nodemailer";
+import { createClient } from "@supabase/supabase-js";
 
-export async function sentReportMail(summary: {
-  ai_summary: string;
-  report_month: string;
-}) {
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
+
+export async function sentReportMail(id: number) {
+  const { data, error } = await supabase
+    .from("reports")
+    .select("ai_summary, report_month, mailaddress")
+    .eq("id", id)
+    .single();
+
+  if (error || !data) {
+    throw new Error("データ取得失敗: " + error?.message);
+  }
+
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -14,8 +27,8 @@ export async function sentReportMail(summary: {
 
   await transporter.sendMail({
     from: process.env.GMAIL_USER,
-    to: process.env.GMAIL_USER,
-    subject: `月次セキュリティレポート ${summary.report_month}`,
-    text: summary.ai_summary,
+    to: data.mailaddress,
+    subject: `月次セキュリティレポート ${data.report_month}`,
+    text: data.ai_summary,
   });
 }
