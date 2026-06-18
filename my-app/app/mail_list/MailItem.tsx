@@ -15,8 +15,10 @@ export default function MailItem({ item }: { item: any }) {
     if (res.ok) {
       alert("更新しました");
     } else {
-      alert("更新失敗");
-    }
+  const text = await res.text();
+  console.log(text);
+  alert("更新失敗: " + text);
+}
   };
 
   const handleSend = async () => {

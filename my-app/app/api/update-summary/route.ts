@@ -9,10 +9,15 @@ const supabase = createClient(
 export async function POST(req: NextRequest) {
   const { id, ai_summary } = await req.json();
 
+  console.log("受け取ったid:", id);
+  console.log("受け取ったai_summary:", ai_summary);
+
   const { error } = await supabase
     .from("reports")
     .update({ ai_summary })
     .eq("id", id);
+
+  console.log("Supabase error:", error);
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
