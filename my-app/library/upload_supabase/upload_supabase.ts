@@ -46,9 +46,9 @@ export async function upload_supabase(fileName:string,summary:any){
       infected_hosts: summary.infected_Hosts,
       traffic_gb: summary.trafficGb_gb,
       ai_summary: summary.ai_summary,
-      MacAddress: remac,
-      MailAddress:reemail,
-      companyName:recompanyname
+      macaddress: remac,
+      mailaddress:reemail,
+      companyname:recompanyname
     })
     .select();
 
