@@ -8,29 +8,26 @@ const supabase = createClient(
 
 export async function upload_supabase(fileName:string,summary:any){
 
-  // filenameからmacaddressを抽出
- const remac=fileName
- .replace(/:/g,"")
- .replace(/\.pdf$/i,"");
+  // filenameをもとに戻す
+  const encoded = fileName.replace(/\.pdf$/i, "");
 
-//  下は、スプレッドシートに送る用
- const sent_mac=fileName
- .replace(/\.pdf$/i,"");
-  // filenameからmacaddressを抽出
+  const base64 = encoded
+    .replace(/-/g, "+")
+    .replace(/_/g, "/");
+  // filenameをもとに戻す
+   
+  // macアドレス抽出
+  const remac=base64.slice(0,12)
+  // メールアドレス抽出
+ 
+  const recompanyname= base64.match(
+  /_asdfgh(.*?)lkjhg_/
+)?.[1];
 
-//  gasにつなぐ→macaddressから会社の名前と、メールアドレスを探す
+  const reemail=base64.match(
+    /lkjhg_(.*?)\.pdf/
+  )
 
-console.log("vercel→gasをつなげる前")
-
-const res = await fetch(
-  `https://script.google.com/s/AKfycbzwObh5kfv7ZG172FoslMhUtZrwkieoCjJOfH3lz043SVP6B1efsC1bHtrjAtFiQLP-/exec?mac=${encodeURIComponent(sent_mac)}`
-);
-
-const result = await res.json();
-console.log("vercel→gasをつなげ終わりました")
-
-console.log(result.companyname);
-console.log(result.email);
 
  const { data, error } = await supabase
     .from("reports")
@@ -45,8 +42,8 @@ console.log(result.email);
       traffic_gb: summary.trafficGb_gb,
       ai_summary: summary.ai_summary,
       MacAddress: remac,
-      MailAddress:result.email,
-      companyName:result.companyname
+      MailAddress:reemail,
+      companyName:recompanyname
     })
     .select();
 
