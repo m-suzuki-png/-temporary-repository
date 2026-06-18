@@ -1,5 +1,4 @@
 import { createClient } from "@supabase/supabase-js";
-import { logger } from "../../library/logger/logger";
 
 export const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -9,7 +8,7 @@ export const supabase = createClient(
 export default async function MailListPage() {
   const { data, error } = await supabase
     .from("reports")
-    .select("ai_summary");
+    .select("id, ai_summary");
 
   if (error) {
     return <div>取得失敗: {error.message}</div>;
@@ -28,8 +27,6 @@ export default async function MailListPage() {
             marginTop: 16,
           }}
         >
-          <h2>{item.title ?? item.subject}</h2>
-
           <pre style={{ whiteSpace: "pre-wrap" }}>
             {item.ai_summary}
           </pre>
