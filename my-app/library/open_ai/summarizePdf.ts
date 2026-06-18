@@ -10,8 +10,36 @@ const client = new OpenAI({
 
 
 
-export async function summarizePdf(origin: Blob) {
+export async function summarizePdf(fileName:string ,origin: Blob) {
   try {
+
+    // filenameをもとに戻す
+  const encoded = fileName.replace(/\.pdf$/i, "");
+
+  const base64 = encoded
+    .replace(/-/g, "+")
+    .replace(/_/g, "/");
+
+    const decodedName = Buffer
+    .from(base64, "base64")
+    .toString("utf-8");
+  // filenameをもとに戻す
+   
+  // macアドレス抽出
+  const remac=decodedName.slice(0,12)
+  // メールアドレス抽出
+ 
+  const recompanyname=  decodedName.match(
+  /_asdfgh(.*?)lkjhg_/
+)?.[1];
+
+  const reemail= decodedName.match(
+    /lkjhg_(.*?)\.pdf/
+  )?.[1];
+// filenameから会社名などの取り出し官僚
+
+
+
     const arrayBuffer = await origin.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
@@ -48,6 +76,7 @@ export async function summarizePdf(origin: Blob) {
               このPDFを解析して、以下のJSONのみを出力してください。
               数値項目はPDFから読み取ってください。(0の部分を)
               説明文やコードブロックは不要です。
+            
 
 {
   "ai_summary": "",
@@ -58,17 +87,26 @@ export async function summarizePdf(origin: Blob) {
   "ips_count": 0,
   "bot_count": 0,
   "infected_Hosts": 0,
-  "trafficGb_gb" : 0
+  "trafficGb_gb" : 0,
+ "macaddress": "${remac}",
+  "mailaddress": "${reemail}",
+  "companyname": "${recompanyname}"
 }
 
 
 顧客にgmailを書きます。以下のことを端的にまとめたメール文章を書いてください
 ai_summaryにそのメール文章をそのまま挿入してください
 
+
 顧客向け月次セキュリティレポートを作成してください。
 専門用語を減らし、非エンジニアにも分かる文章にしてください。
 この機器が防いだ脅威と、防げなかった場合に想定されるリスクを説明してください。
 一枚のPDFサイズにしたいのと、見た瞬間にわかるようにカラーの図を入れてください
+
+"${reemail}",は一番最初に記入する。これはどこに送付するかユーザーがわかるようにするため
+comanynameは会社名だから、以下のように書き出してください。
+${recompanyname}様 
+いつもお世話になっております。ニコニコテクノサービスでございます。
 
               `,
             },
