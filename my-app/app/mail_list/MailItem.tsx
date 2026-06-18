@@ -1,11 +1,18 @@
 "use client";
 
-import { sentReportMail } from "../../library/sent_gmail/sent_gmail";
-
 export default function MailItem({ item }: { item: any }) {
   const handleSend = async () => {
-    await sentReportMail(item.id);
-    alert("送信しました");
+    const res = await fetch("/api/send-mail", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: item.id }),
+    });
+
+    if (res.ok) {
+      alert("送信しました");
+    } else {
+      alert("送信失敗");
+    }
   };
 
   return (
