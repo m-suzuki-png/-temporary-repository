@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { logger } from "../logger/logger";
+import { logger } from "../../library/logger/logger";
 
 export const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
