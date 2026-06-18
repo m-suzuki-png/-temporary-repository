@@ -6,6 +6,8 @@ export const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
+export const dynamic = "force-dynamic";
+
 export default async function MailListPage() {
   const { data, error } = await supabase
     .from("reports")

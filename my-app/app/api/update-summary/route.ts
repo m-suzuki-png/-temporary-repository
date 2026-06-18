@@ -18,6 +18,8 @@ export async function POST(req: NextRequest) {
     .eq("id", id);
 
   console.log("Supabase error:", error);
+  console.log("SERVICE_ROLE exists:", !!process.env.SUPABASE_SERVICE_ROLE_KEY);
+console.log("KEY starts:", process.env.SUPABASE_SERVICE_ROLE_KEY?.slice(0, 20));
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
