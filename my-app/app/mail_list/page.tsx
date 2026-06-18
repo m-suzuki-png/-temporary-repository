@@ -8,7 +8,7 @@ export const supabase = createClient(
 export default async function MailListPage() {
   const { data, error } = await supabase
     .from("reports")
-    .select("ai_summary,mailaddress");
+    .select("id, ai_summary, mailaddress");
 
   if (error) {
     return <div>取得失敗: {error.message}</div>;
@@ -20,9 +20,11 @@ export default async function MailListPage() {
 
       {data?.map((item) => (
         <div
-
+          key={item.id}
+          style={{ border: "1px solid #ddd", padding: 16, marginTop: 16 }}
+        >
           <pre style={{ whiteSpace: "pre-wrap" }}>
-          {item.mailaddress}
+            {item.mailaddress}
           </pre>
 
           <pre style={{ whiteSpace: "pre-wrap" }}>
