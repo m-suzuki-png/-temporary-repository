@@ -9,7 +9,7 @@ const supabase = createClient(
 export async function sentReportMail(id: number) {
   const { data, error } = await supabase
     .from("reports")
-    .select("ai_summary, report_month, mailaddress")
+    .select("ai_summary,mailaddress")
     .eq("id", id)
     .single();
 

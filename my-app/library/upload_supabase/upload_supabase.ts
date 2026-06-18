@@ -22,7 +22,7 @@ export async function upload_supabase(fileName:string,summary:any){
       traffic_gb: summary.trafficGb_gb,
       ai_summary: summary.ai_summary,
       macaddress: summary.macaddress,
-      ailaddress: summary.mailaddress,
+      mailaddress: summary.mailaddress,
       companyname: summary.companyname
     })
     .select();
