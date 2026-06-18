@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import {logger} from "../logger/logger"
+import { Buffer } from "buffer";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -14,19 +15,23 @@ export async function upload_supabase(fileName:string,summary:any){
   const base64 = encoded
     .replace(/-/g, "+")
     .replace(/_/g, "/");
+
+    const decodedName = Buffer
+    .from(base64, "base64")
+    .toString("utf-8");
   // filenameをもとに戻す
    
   // macアドレス抽出
-  const remac=base64.slice(0,12)
+  const remac=decodedName.slice(0,12)
   // メールアドレス抽出
  
-  const recompanyname= base64.match(
+  const recompanyname=  decodedName.match(
   /_asdfgh(.*?)lkjhg_/
 )?.[1];
 
-  const reemail=base64.match(
+  const reemail= decodedName.match(
     /lkjhg_(.*?)\.pdf/
-  )
+  )?.[1];
 
 
  const { data, error } = await supabase
