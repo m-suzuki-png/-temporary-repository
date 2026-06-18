@@ -9,29 +9,29 @@ const supabase = createClient(
 
 export async function upload_supabase(fileName:string,summary:any){
 
-  // filenameをもとに戻す
-  const encoded = fileName.replace(/\.pdf$/i, "");
+//   // filenameをもとに戻す
+//   const encoded = fileName.replace(/\.pdf$/i, "");
 
-  const base64 = encoded
-    .replace(/-/g, "+")
-    .replace(/_/g, "/");
+//   const base64 = encoded
+//     .replace(/-/g, "+")
+//     .replace(/_/g, "/");
 
-    const decodedName = Buffer
-    .from(base64, "base64")
-    .toString("utf-8");
-  // filenameをもとに戻す
+//     const decodedName = Buffer
+//     .from(base64, "base64")
+//     .toString("utf-8");
+//   // filenameをもとに戻す
    
-  // macアドレス抽出
-  const remac=decodedName.slice(0,12)
-  // メールアドレス抽出
+//   // macアドレス抽出
+//   const remac=decodedName.slice(0,12)
+//   // メールアドレス抽出
  
-  const recompanyname=  decodedName.match(
-  /_asdfgh(.*?)lkjhg_/
-)?.[1];
+//   const recompanyname=  decodedName.match(
+//   /_asdfgh(.*?)lkjhg_/
+// )?.[1];
 
-  const reemail= decodedName.match(
-    /lkjhg_(.*?)\.pdf/
-  )?.[1];
+//   const reemail= decodedName.match(
+//     /lkjhg_(.*?)\.pdf/
+//   )?.[1];
 
 
  const { data, error } = await supabase
@@ -46,9 +46,9 @@ export async function upload_supabase(fileName:string,summary:any){
       infected_hosts: summary.infected_Hosts,
       traffic_gb: summary.trafficGb_gb,
       ai_summary: summary.ai_summary,
-      macaddress: remac,
-      mailaddress:reemail,
-      companyname:recompanyname
+      macaddress: summary.remac,
+      mailaddress:summary.reemail,
+      companyname:summary.recompanyname
     })
     .select();
 
