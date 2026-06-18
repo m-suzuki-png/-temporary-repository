@@ -21,7 +21,7 @@ export default async function MailListPage() {
 
       {data?.map((item) => (
         <div
-          key={item.ia}
+          key={item.id}
           style={{
             border: "1px solid #ddd",
             padding: 16,
