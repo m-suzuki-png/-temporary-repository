@@ -3,7 +3,6 @@ import fs from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
 import { summarizePdf } from "../../../library/open_ai/summarizePdf";
-// import {test} from "../../../library/test_open_ai/test";
 import { createClient } from "@supabase/supabase-js";
 import { upload_supabase } from "../../../library/upload_supabase/upload_supabase";
 import { download_supabase } from "../../../library/download_supabase/download_supabase";
