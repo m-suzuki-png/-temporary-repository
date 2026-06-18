@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import MailItem from "./MailItem";
 
 export const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -17,25 +18,37 @@ export default async function MailListPage() {
   return (
     <main style={{ padding: 24 }}>
       <h1>メール確認画面</h1>
-
       {data?.map((item) => (
-        <div
-          key={item.id}
-          style={{ border: "1px solid #ddd", padding: 16, marginTop: 16 }}
-        >
-          <pre style={{ whiteSpace: "pre-wrap" }}>
-            {item.mailaddress}
-          </pre>
-
-          <pre style={{ whiteSpace: "pre-wrap" }}>
-            {item.ai_summary}
-          </pre>
-
-          <button>
-            メール送信
-          </button>
-        </div>
+        <MailItem key={item.id} item={item} />
       ))}
     </main>
   );
 }
+
+
+// //こっちはメールの一覧が見れる
+//   return (
+//     <main style={{ padding: 24 }}>
+//       <h1>メール確認画面</h1>
+
+//       {data?.map((item) => (
+//         <div
+//           key={item.id}
+//           style={{ border: "1px solid #ddd", padding: 16, marginTop: 16 }}
+//         >
+//           <pre style={{ whiteSpace: "pre-wrap" }}>
+//             {item.mailaddress}
+//           </pre>
+
+//           <pre style={{ whiteSpace: "pre-wrap" }}>
+//             {item.ai_summary}
+//           </pre>
+
+//          <button onClick={() => router.push("/mail_list")}>
+//             メール送信
+//           </button>
+//         </div>
+//       ))}
+//     </main>
+//   );
+// }
