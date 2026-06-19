@@ -27,15 +27,21 @@ export async function summarizePdf(fileName:string ,origin: Blob) {
    
   // macアドレス抽出
   const remac=decodedName.slice(0,12)
-  // メールアドレス抽出
- 
+  // 会社名抽出
   const recompanyname=  decodedName.match(
-  /_asdfgh(.*?)lkjhg_/
+  /lkjhg_(.*?)qwert_/
 )?.[1];
+// 部門名抽出
+    const departmentname=  decodedName.match(
+  /qwert_(.*?)poiuy_/
+)?.[1]; 
 
+
+// メールアドレス抽出
   const reemail= decodedName.match(
-    /lkjhg_(.*?)\.pdf/
+    /poiuy_(.*?)\.pdf/
   )?.[1];
+
 // filenameから会社名などの取り出し官僚
 
 
@@ -90,7 +96,8 @@ export async function summarizePdf(fileName:string ,origin: Blob) {
   "trafficGb_gb" : 0,
  "macaddress": "${remac}",
   "mailaddress": "${reemail}",
-  "companyname": "${recompanyname}"
+  "companyname": "${recompanyname}",
+  "departmentname": "${departmentname}"
 }
 
 
@@ -101,7 +108,7 @@ ai_summaryにそのメール文章をそのまま挿入してください
 顧客向け月次セキュリティレポートを作成してください。
 専門用語を減らし、非エンジニアにも分かる文章にしてください。
 この機器が防いだ脅威と、防げなかった場合に想定されるリスクを説明してください。
-一枚のPDFサイズにしたいのと、見た瞬間にわかるようにカラーの図を入れてください
+
 
 comanynameは会社名だから、以下のように書き出してください。
 ${recompanyname}様 
