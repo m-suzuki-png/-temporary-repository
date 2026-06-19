@@ -65,8 +65,8 @@ export async function sentReportMail(id: number) {
 
   const { data: pdfFile, error: pdfError } =
     await supabase.storage
-      .from("pdf")
-      .download(data.pdf_path);
+      .from("origin_pdf_save")
+      .download(`2026_6/${data.pdf_path}`)
 
   if (pdfError || !pdfFile) {
     throw new Error(
