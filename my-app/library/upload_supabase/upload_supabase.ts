@@ -31,7 +31,7 @@ export async function upload_supabase(fileName:string,summary:any){
     .select();
 
     // ファイル名を顧客に送れる名前にする
-    const {Error}=await supabase.storage
+    const {error_upload}=await supabase.storage
   .from("pdf")
   .move(
     "fileName",
@@ -43,7 +43,7 @@ export async function upload_supabase(fileName:string,summary:any){
     throw error
   }
 
-  if (Error){
+  if (error_upload){
     logger.Error(Error,"supabaseにpdfの名前は変更できていません")
     throw error
   }
