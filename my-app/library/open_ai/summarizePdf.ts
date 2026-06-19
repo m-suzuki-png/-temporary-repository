@@ -124,17 +124,7 @@ ${recompanyname}様
       ],
     });
 
-    const parsed = JSON.parse(response.output_text);
-
-return {
-  ...parsed,
-  macaddress: remac,
-  mailaddress: reemail,
-  companyname: recompanyname,
-  departmentname: departmentname,
-  subject_mail: subject_mail,
-  report_month: reportMonth,
-};
+    return JSON.parse(response.output_text);
   } catch (error) {
     logger.error(error);
     throw error;
