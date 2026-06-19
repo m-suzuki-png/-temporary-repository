@@ -24,26 +24,25 @@ export async function summarizePdf(fileName:string ,origin: Blob) {
     .from(base64, "base64")
     .toString("utf-8");
   // filenameをもとに戻す
-  //  macaddress
- const remac = decodedName.slice(0, 12);
-// 作成日時
-const reportMonth =
-  decodedName.match(/_asdfgh(.*?)lkjhg_/)?.[1] ?? "";
-// 会社名
-const recompanyname =
-  decodedName.match(/lkjhg_(.*?)qwert_/)?.[1] ?? "";
-// 部門名
-const departmentname =
-  decodedName.match(/qwert_(.*?)poiuy_/)?.[1] ?? "";
-// mailアドレス
-const reemail =
-  decodedName.match(/poiuy_(.*)$/)?.[1] ?? "";
+   
+  // macアドレス抽出
+  const remac=decodedName.slice(0,12)
+  // 会社名抽出
+  const recompanyname=  decodedName.match(
+  /lkjhg_(.*?)qwert_/
+)?.[1];
+// 部門名抽出
+    const departmentname=  decodedName.match(
+  /qwert_(.*?)poiuy_/
+)?.[1]; 
 
-// 件名作成
-  const subject_mail =
-  departmentname === ""
-    ? `${reportMonth} ${recompanyname}様 cpレポート`
-    : `${reportMonth} ${recompanyname}様 ${departmentname}分cpレポート`;
+
+// メールアドレス抽出
+  const reemail= decodedName.match(
+    /poiuy_(.*?)\.pdf/
+  )?.[1];
+
+// filenameから会社名などの取り出し官僚
 
 
 
@@ -98,8 +97,7 @@ const reemail =
  "macaddress": "${remac}",
   "mailaddress": "${reemail}",
   "companyname": "${recompanyname}",
-  "departmentname": "${departmentname}",
-  "subject_mail":"${subject_mail }"
+  "departmentname": "${departmentname}"
 }
 
 
