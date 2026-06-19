@@ -52,6 +52,7 @@ export async function summarizePdf(fileName:string ,origin: Blob) {
   : `${month}_${recompanyname}様`;
 // filenameから会社名などの取り出し官僚
 
+ console.log(subject_mail,"ここはデータベースに入れる変数")
 
 
     const arrayBuffer = await origin.arrayBuffer();

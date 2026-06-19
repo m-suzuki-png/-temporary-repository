@@ -30,8 +30,21 @@ export async function upload_supabase(fileName:string,summary:any){
     })
     .select();
 
+    // ファイル名を顧客に送れる名前にする
+    const {Error}=await supabase.storage
+  .from("pdf")
+  .move(
+    "fileName",
+    "summary.subject_mail"
+  );
+
   if (error) {
     logger.error(error,"supabaseに適切に保存されていません")
+    throw error
+  }
+
+  if (Error){
+    logger.Error(Error,"supabaseにpdfの名前は変更できていません")
     throw error
   }
   
