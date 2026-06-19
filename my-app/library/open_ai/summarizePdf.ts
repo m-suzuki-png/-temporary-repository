@@ -96,8 +96,8 @@ const month = decodedName.match(
 {
   "ai_summary": "",
   "customer_id": 11,
-  "report_month": "",
-  "pdf_path": "任意の文字列",
+  "report_month": "${month}",
+  "pdf_path": "${fileName}",
   "av_count": 0 ,
   "ips_count": 0,
   "bot_count": 0,
