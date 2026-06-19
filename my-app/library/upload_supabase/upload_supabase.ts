@@ -36,15 +36,7 @@ export async function upload_supabase(fileName:string,summary:any){
     throw error;
   }
 
-  const { error: error_upload } = await supabase.storage
-    .from("pdf")
-    .move(fileName, `${summary.subject_mail}.pdf`);
-
-  if (error_upload) {
-    logger.error(error_upload, "supabaseのPDF名を変更できていません");
-    throw error_upload;
-  }
-
+ 
   return data;
 }
 
