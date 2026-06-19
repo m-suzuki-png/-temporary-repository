@@ -37,9 +37,9 @@ export async function summarizePdf(fileName:string ,origin: Blob) {
 )?.[1]; 
 
 // 送信日確定
-  const month= decodedName.match(
-    /_asdfgh(.*?)lkjhg_\.pdf/
-  )?.[1];
+const month = decodedName.match(
+  /_asdfgh(.*?)lkjhg_/
+)?.[1] ?? "";
 
 // メールアドレス抽出
   const reemail= decodedName.match(
