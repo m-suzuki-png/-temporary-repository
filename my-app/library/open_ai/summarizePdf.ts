@@ -36,12 +36,20 @@ export async function summarizePdf(fileName:string ,origin: Blob) {
   /qwert_(.*?)poiuy_/
 )?.[1]; 
 
+// 送信日確定
+  const month= decodedName.match(
+    /_asdfgh(.*?)lkjhg_\.pdf/
+  )?.[1];
 
 // メールアドレス抽出
   const reemail= decodedName.match(
     /poiuy_(.*?)\.pdf/
   )?.[1];
 
+  // 件名確定
+  const subject_mail = departmentname
+  ? `${month}_${recompanyname}様_${departmentname}分`
+  : `${month}_${recompanyname}様`;
 // filenameから会社名などの取り出し官僚
 
 
@@ -98,7 +106,8 @@ export async function summarizePdf(fileName:string ,origin: Blob) {
   "mailaddress": "${reemail}",
   "companyname": "${recompanyname}",
   "departmentname": "${departmentname}"
-}
+   "subject_mail": "${subject_mail}"
+  }
 
 
 顧客にgmailを書きます。以下のことを端的にまとめたメール文章を書いてください
