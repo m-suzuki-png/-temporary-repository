@@ -23,7 +23,10 @@ export async function upload_supabase(fileName:string,summary:any){
       ai_summary: summary.ai_summary,
       macaddress: summary.macaddress,
       mailaddress: summary.mailaddress,
-      companyname: summary.companyname
+      companyname: summary.companyname,
+      departmentname:  summary.departmentname,
+      subject_mail:summary.subject_mail
+
     })
     .select();
 
