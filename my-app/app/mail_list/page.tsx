@@ -19,7 +19,7 @@ export default async function MailListPage() {
 
   return (
     <main style={{ padding: 24 }}>
-      <h1>メール確認画面</h1>
+      <h1>メール未送信一覧</h1>
       {data?.map((item) => (
         <MailItem key={item.id} item={item} />
       ))}
