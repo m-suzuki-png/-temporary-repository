@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import {logger} from "../logger/logger"
-import {get_date} from "../get_date/get_date"
+import { getYearMonthFolder } from "../get_date/get_date";
 
 
 const supabase = createClient(
@@ -10,7 +10,7 @@ const supabase = createClient(
 
 export async function download_supabase(i : number) {
 
-  const  nowyear=get_date();
+const nowyear = getYearMonthFolder();
 
  const { data: files, error: listError } = await supabase.storage
   .from("origin_pdf_save")
@@ -32,7 +32,7 @@ if (!pdfFile) {
 
 const { data: pdfData, error: downloadError } = await supabase.storage
   .from("origin_pdf_save")
-  .download(`2026_6/${pdfFile.name}`);
+ .download(`${nowyear}/${pdfFile.name}`)
 
 if (downloadError) throw downloadError;
 
