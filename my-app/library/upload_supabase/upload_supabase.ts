@@ -30,11 +30,17 @@ export async function upload_supabase(fileName:string,summary:any){
     })
     .select();
     
+      
+ if (error) {
+    logger.error(error, "supabaseに適切に保存されていません");
+    throw error;
+  }
 
-    const { error: statusError } = await supabase
+// data は配列で返るので [0] が必要
+   const { error: statusError } = await supabase
   .from("status")
   .insert({
-    report_id: data.id,
+    report_id: data[0].id,
     status: 0,
     sent: false
   });
@@ -42,11 +48,7 @@ export async function upload_supabase(fileName:string,summary:any){
 if (statusError) throw statusError;
 
 
-    // ファイル名を顧客に送れる名前にする
- if (error) {
-    logger.error(error, "supabaseに適切に保存されていません");
-    throw error;
-  }
+
 
  
   return data;
