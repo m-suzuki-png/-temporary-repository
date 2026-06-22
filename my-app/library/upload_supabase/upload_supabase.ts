@@ -36,8 +36,15 @@ export async function upload_supabase(fileName:string,summary:any){
     throw error;
   }
 
-// data は配列で返るので [0] が必要
-   const { error: statusError } = await supabase
+
+if (!data || data.length === 0) {
+  throw new Error("dataが空です");
+}
+
+// ここで中身を確認
+console.log("data[0]の中身:", JSON.stringify(data[0]));
+
+const { error: statusError } = await supabase
   .from("status")
   .insert({
     report_id: data[0].id,
@@ -45,7 +52,11 @@ export async function upload_supabase(fileName:string,summary:any){
     sent: false
   });
 
-if (statusError) throw statusError;
+  
+if (statusError) {
+    logger.error(statusError, "supabaseに適切に保存されていません");
+    throw statusError;
+}
 
 
 
