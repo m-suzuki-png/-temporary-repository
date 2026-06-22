@@ -38,25 +38,7 @@ if (error) {
   throw error;
 }
 
-if (!data || data.length === 0) {
-  throw new Error("dataが空です");
-}
 
-console.log("data[0]:", JSON.stringify(data[0]));
-
-const { error: statusError } = await supabase
-  .from("status")
-  .insert({
-    report_id: data[0].id,
-    status: 0,
-    sent: false
-  });
-
-console.log("status insert完了", statusError);
-
-if (statusError) throw statusError;
-
-console.log("upload_supabase終了");
 
 
 
