@@ -14,6 +14,7 @@ export default function Home() {
 
   async function run() {
     try {
+      // reactのルール、loadingで情報をつけ足してsummaryに入っていく
       setLoading(true);
       setSummary("");
 

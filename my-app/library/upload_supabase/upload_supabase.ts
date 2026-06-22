@@ -29,6 +29,18 @@ export async function upload_supabase(fileName:string,summary:any){
 
     })
     .select();
+    
+
+    const { error: statusError } = await supabase
+  .from("status")
+  .insert({
+    report_id: data.id,
+    status: 0,
+    sent: false
+  });
+
+if (statusError) throw statusError;
+
 
     // ファイル名を顧客に送れる名前にする
  if (error) {
