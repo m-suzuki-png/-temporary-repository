@@ -31,18 +31,18 @@ export async function upload_supabase(fileName:string,summary:any){
     .select();
     
       
- if (error) {
-    logger.error(error, "supabaseに適切に保存されていません");
-    throw error;
-  }
+console.log("reports insert完了", JSON.stringify(data));
 
+if (error) {
+  logger.error(error, "supabaseに適切に保存されていません");
+  throw error;
+}
 
 if (!data || data.length === 0) {
   throw new Error("dataが空です");
 }
 
-// ここで中身を確認
-console.log("data[0]の中身:", JSON.stringify(data[0]));
+console.log("data[0]:", JSON.stringify(data[0]));
 
 const { error: statusError } = await supabase
   .from("status")
@@ -52,12 +52,11 @@ const { error: statusError } = await supabase
     sent: false
   });
 
-  
-if (statusError) {
-    logger.error(statusError, "supabaseに適切に保存されていません");
-    throw statusError;
-}
+console.log("status insert完了", statusError);
 
+if (statusError) throw statusError;
+
+console.log("upload_supabase終了");
 
 
 
