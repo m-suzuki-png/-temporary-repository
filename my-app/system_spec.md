@@ -171,9 +171,9 @@ my-app/
 | companyname | text | 会社名 |
 | departmentname | text | 部門名 |
 | subject_mail | text | メール件名 |
+|sent | boolean|メール送信したかしていないか判定フラグ、将来的にはstatusテーブルに実装するつもり
 
-
-### DB テーブル: `status`
+### DB テーブル: `status` これはエラーが出たのでまだ実装したいないが将来的に実装するかも
 
 | カラム名 | 型 | 説明 |
 |---|---|---|

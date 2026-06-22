@@ -25,7 +25,8 @@ export async function upload_supabase(fileName:string,summary:any){
       mailaddress: summary.mailaddress,
       companyname: summary.companyname,
       departmentname:  summary.departmentname,
-      subject_mail:summary.subject_mail
+      subject_mail:summary.subject_mail,
+      sent: false
 
     })
     .select();
@@ -38,11 +39,6 @@ if (error) {
   throw error;
 }
 
-
-
-
-
- 
   return data;
 }
 
