@@ -41,10 +41,11 @@ const month = decodedName.match(
   /_asdfgh(.*?)lkjhg_/
 )?.[1] ?? "";
 
-// メールアドレス抽出
-  const reemail= decodedName.match(
-    /poiuy_(.*?)\.pdf/
-  )?.[1];
+// メールアドレス抽出 本番はこっち
+  // const reemail= decodedName.match(
+  //   /poiuy_(.*?)\.pdf/
+  // )?.[1];
+  const reemail = "r-mori@rem2525.com";
 
   // 件名確定
   const subject_mail = departmentname

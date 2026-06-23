@@ -47,8 +47,8 @@ export async function sentReportMail(id: number) {
 
   await transporter.sendMail({
     from: process.env.GMAIL_USER,
-    // to: data.mailaddress, //こっちは本番環境、練習では自分のメールアドレスでやってください。許可があるまでこれは使わない
-    to :process.env.GMAIL_USER,
+     to: data.mailaddress, //こっちは本番環境、練習では自分のメールアドレスでやってください。許可があるまでこれは使わない
+    // to :process.env.GMAIL_USER,
     subject:  `${data.subject_mail}`,
     text: data.ai_summary,
 
