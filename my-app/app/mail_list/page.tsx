@@ -1,10 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import MailItem from "./MailItem";
 
-
-
-// export const dynamic = "force-dynamic";
-
 export default async function MailListPage() {
 
   const supabase = createClient(
