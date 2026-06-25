@@ -48,7 +48,7 @@ const month = decodedName.match(
   // const reemail= decodedName.match(
   //   /poiuy_(.*?)\.pdf/
   // )?.[1];
-  const reemail = "r-mori@rem2525.com";
+  const reemail = "m-suzuki@rem2525.com";
 
   // 件名確定
   const subject_mail = departmentname
