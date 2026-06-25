@@ -2,12 +2,16 @@ import nodemailer from "nodemailer";
 import { createClient } from "@supabase/supabase-js";
 import { Buffer } from "buffer";
 
-const supabase = createClient(
+
+
+export async function sentReportMail(id: number) {
+
+
+  const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-export async function sentReportMail(id: number) {
   const { data, error } = await supabase
     .from("reports")
     .select(

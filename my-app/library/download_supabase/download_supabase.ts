@@ -3,12 +3,14 @@ import {logger} from "../logger/logger"
 import { getYearMonthFolder } from "../get_date/get_date";
 
 
-const supabase = createClient(
+
+export async function download_supabase(i : number) {
+
+  const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-export async function download_supabase(i : number) {
 
 const nowyear = getYearMonthFolder();
 

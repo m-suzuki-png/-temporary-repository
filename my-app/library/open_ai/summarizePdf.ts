@@ -4,13 +4,16 @@ import fs from "fs";
 import path from "path";
 import { Buffer } from "buffer";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+
 
 
 
 export async function summarizePdf(fileName:string ,origin: Blob) {
+
+  const client = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
   try {
 
     // filenameをもとに戻す
